@@ -19,6 +19,7 @@ const ManageBeneficiarySection = () => {
     setBankname('');
     setAccounttype('');
   };
+
   // State to store list of beneficiaries
   const [beneficiaries, setBeneficiaries] = useState([]);
 
@@ -27,16 +28,17 @@ const ManageBeneficiarySection = () => {
   }, []);
 
   const fetchData = async () => {
-    // Simulated asynchronous data fetching
     const response = await fetch('https://mock-api-1-qbee.onrender.com/api/users');
     const data = await response.json();
     setBeneficiaries(data);
   };
+
   // State to store form input values
   const [name, setName] = useState('');
   const [accountNumber, setAccountNum] = useState('');
   const [bankname, setBankname] = useState('');
   const [accounttype, setAccounttype] = useState('');
+
   // State to store the index of beneficiary being edited
   const [editIndex, setEditIndex] = useState(null);
   const [removeIndex, setRemoveIndex] = useState(null);
@@ -47,47 +49,45 @@ const ManageBeneficiarySection = () => {
     
     if (editIndex === null) {
       setshowModalAdd(true)
-      
     } else {
-        setshowModalEdit(true)
+      setshowModalEdit(true)
     }
     
   };
 
   const addDetails = () => {
     setshowModalAdd(false);
-     // Add new beneficiary to the list
-     setBeneficiaries([...beneficiaries, { name, accountNumber, bankname, accounttype }]);
-     // Clear form inputs
-   setName('');
-   setAccountNum('');
-   setBankname('');
-   setAccounttype('');
-   setshowModalNotify(true);
-   setTimeout(() => {
-    setshowModalNotify(false);
-  }, 3000); 
-  }
-
-  const updateDetails = () => {
-    setshowModalEdit(false);
-     // Edit existing beneficiary
-     const updatedBeneficiaries = [...beneficiaries];
-     updatedBeneficiaries[editIndex] = { name, accountNumber, bankname, accounttype };
-     setBeneficiaries(updatedBeneficiaries);
-     // Reset editIndex
-     setEditIndex(null);
+    setBeneficiaries([...beneficiaries, { name, accountNumber, bankname, accounttype }]);
+    // Clear form inputs
     setName('');
     setAccountNum('');
     setBankname('');
     setAccounttype('');
     setshowModalNotify(true);
-   setTimeout(() => {
+    setTimeout(() => {
+     setshowModalNotify(false);
+  }, 3000); 
+  }
+
+  const updateDetails = () => {
+    setshowModalEdit(false);
+    // Edit existing beneficiary
+    const updatedBeneficiaries = [...beneficiaries];
+    updatedBeneficiaries[editIndex] = { name, accountNumber, bankname, accounttype };
+    setBeneficiaries(updatedBeneficiaries);
+    // Reset editIndex
+    setEditIndex(null);
+    setName('');
+    setAccountNum('');
+    setBankname('');
+    setAccounttype('');
+    setshowModalNotify(true);
+    setTimeout(() => {
     setshowModalNotify(false);
   }, 3000); 
   }
 
-  // Function to handle beneficiary details
+  // Function to handle view beneficiary details
   const handleDetails = (index) => {
     console.log(index);
     setshowModal(true);
